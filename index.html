@@ -47,6 +47,7 @@
     function sendDataToUnity(data) {
         var iframe = document.getElementById('unityIframe');
         iframe.contentWindow.postMessage(data, 'https://rahulkumarrugartisan.github.io/3D_Tool_Test_speed/'); // Target the Unity WebGL app's origin
+        console.log("-----------------Data sent to unity--------------------");
     }
 </script>
 
