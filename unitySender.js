@@ -1,8 +1,10 @@
-// Call the sendDataToUnity function from unityReceiver.js
-document.getElementById("sendDataButton").addEventListener("click", () => {
-  sendDataToUnity("Hello from externalScript.js!");
-});
+const WebSocket = require('ws');
 
-// You can also call it directly:
-sendDataToUnity("This is a direct call from another script.");
+const socket = new WebSocket('wss://serverB.com/socket');
+
+socket.on('open', () => {
+    const message = { message: 'Hello from Server A!' };
+    socket.send(JSON.stringify(message));
+    console.log('Message sent to Server B:', message);
+});
 
