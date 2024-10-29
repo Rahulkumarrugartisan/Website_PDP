@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Embedded Iframe Example</title>
+
   <style>
     body {
       margin: 0;
@@ -13,6 +14,7 @@
       align-items: center;
       height: 100vh;
       background-color: #f0f0f0;
+      position: relative;
     }
 
     .iframe-container {
@@ -20,6 +22,7 @@
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
     }
 
     iframe {
@@ -28,8 +31,33 @@
       height: 610px;
       border: none;
     }
+
+    /* Styling the button */
+    .send-button {
+      position: absolute;
+      bottom: 20px; /* 20px from the bottom of the iframe container */
+      left: 50%; /* Center the button horizontally */
+      transform: translateX(-50%); /* Adjust for perfect centering */
+      width: 60px;
+      height: 60px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .send-button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
+
 <body>
   <div class="iframe-container">
     <iframe 
@@ -38,20 +66,21 @@
       title="Embedded Iframe"
       allowfullscreen>
     </iframe>
-    
+
+    <!-- Button positioned inside the iframe container -->
+    <button class="send-button" onclick="sendDataToUnity('Hello Unity!')">
+      Send
+    </button>
   </div>
 
-  <button onclick="sendDataToUnity('Hello Unity!')">Send Data to Unity</button>
-
-<script type="text/javascript">
+  <script type="text/javascript">
     function sendDataToUnity(data) {
         var iframe = document.getElementById('unityIframe');
         iframe.contentWindow.postMessage(data, 'https://rahulkumarrugartisan.github.io/3D_Tool_Test_speed/'); // Target the Unity WebGL app's origin
-      
-        console.log("-----------------Data sent to unity--------------------");
-    }
-</script>
 
-  
+        console.log("-----------------Data sent to Unity--------------------");
+    }
+  </script>
+
 </body>
 </html>
