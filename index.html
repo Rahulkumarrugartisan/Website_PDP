@@ -33,6 +33,7 @@
 <body>
   <div class="iframe-container">
     <iframe 
+      id="unityIframe"
       src="https://rahulkumarrugartisan.github.io/3D_Tool_Test_speed" 
       title="Embedded Iframe"
       allowfullscreen>
@@ -40,8 +41,14 @@
     
   </div>
 
-   <!-- Button to send data to Unity -->
-    <button onclick="sendDataToUnity('Hello Unity!')">Send Data to Unity</button>
+  <button onclick="sendDataToUnity('Hello Unity!')">Send Data to Unity</button>
+
+<script type="text/javascript">
+    function sendDataToUnity(data) {
+        var iframe = document.getElementById('unityIframe');
+        iframe.contentWindow.postMessage(data, 'https://rahulkumarrugartisan.github.io/3D_Tool_Test_speed'); // Target the Unity WebGL app's origin
+    }
+</script>
 
   
 </body>
