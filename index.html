@@ -3,47 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Embedded Iframe Example</title>
+  <title>Embedded Iframe with Loading Screen</title>
 
   <style>
+    body {
+      padding: 25px;
+      background-color: black;
+      color: white;
+      font-size: 25px;
+      margin: 0;
+    }
 
-     body {
-            padding: 25px;
-            background-color: black;
-            color: white;
-            font-size: 25px;
-        }
+    .dark-mode {
+      background-color: black;
+      color: white;
+    }
 
-        .dark-mode {
-            background-color: black;
-            color: white;
-        }
+    .light-mode {
+      background-color: white;
+      color: black;
+    }
 
-        .light-mode {
-            background-color: white;
-            color: black;
-        }
-   
     .iframe-container {
       justify-content: center;
-        align: center;
-        display:block;
-       
-        overflow: hidden;
-        position: relative;
-        width: 100%; /* Adjust as needed */
-        padding-top: 56.25%; /* 9:16 Aspect Ratio */
-        
+      display: block;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 9:16 Aspect Ratio */
     }
 
     iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 50;
-        width: 50%;
-        height: 50%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none; /* Hidden until loaded */
+    }
+
+    /* Loading screen styles */
+    .loading-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      z-index: 9999;
     }
 
     /* Styling the button */
@@ -74,26 +87,40 @@
 
 <body>
 
+  <!-- Loading screen -->
+  <div id="loadingScreen" class="loading-screen">
+    Loading, please wait...
+  </div>
+
   <div class="iframe-container">
     <iframe 
       id="unityIframe"
       src="https://rahulkumarrugartisan.github.io/3D_Tool_Test_speed/" 
       title="Embedded Iframe"
-      allowfullscreen>
+      allowfullscreen
+      onload="hideLoadingScreen()">
     </iframe>
-
   </div>
 
   <!-- Button positioned inside the iframe container -->
-    <button class="send-button" onclick="SendMessageToJS('https://ar-qa.rugartisan.com/#data=https://tool-dev.artisancarpets.co.uk/media/svg_files/oddball/oddball.svg&shape=arch&size=ft&width=75&length=96&rug_type=handtufted&material_type=pure_silk')">
-      Send
-    </button>
+  <button class="send-button" onclick="SendMessageToJS('https://ar-qa.rugartisan.com/#data=https://tool-dev.artisancarpets.co.uk/media/svg_files/oddball/oddball.svg&shape=arch&size=ft&width=75&length=96&rug_type=handtufted&material_type=pure_silk')">
+    Send
+  </button>
 
   <script type="text/javascript">
+    // Function to hide the loading screen once the iframe loads
+    function hideLoadingScreen() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      const iframe = document.getElementById('unityIframe');
+      loadingScreen.style.display = 'none'; // Hide loading screen
+      iframe.style.display = 'block'; // Show iframe
+    }
+
+    // Function to send message to iframe
     function SendMessageToJS(data) {
-        var iframe = document.getElementById('unityIframe');
-        iframe.contentWindow.postMessage(data, 'https://rahulkumarrugartisan.github.io/3D_Tool_Test_speed/'); // Target the Unity WebGL app's origin
-        console.log("-----------------Data sent to Unity--------------------");
+      var iframe = document.getElementById('unityIframe');
+      iframe.contentWindow.postMessage(data, 'https://rahulkumarrugartisan.github.io/3D_Tool_Test_speed/'); // Target the Unity WebGL app's origin
+      console.log("-----------------Data sent to Unity--------------------");
     }
   </script>
 
